@@ -4,7 +4,7 @@ import apiClient from "./api-client";
  * Login Funktion
  * Sendet Email + Passwort an Backend und speichert Token
  *
- * @param {string} email - User Email
+ * @param {string} usernameOrEmail - User Email oder Username
  * @param {string} password - User Passwort
  * @returns {Promise<Object>} User Daten + Token
  */
@@ -18,7 +18,7 @@ export const login = async (usernameOrEmail, password) => {
             password,
         });
 
-        // Token aus Response extrahieren,
+        // Token aus Response extrahieren
         const { token, userId, username, email, role } = response.data;
 
         // Token in localStorage speichern
@@ -29,45 +29,14 @@ export const login = async (usernameOrEmail, password) => {
         localStorage.setItem("userData", JSON.stringify(userData));
 
         console.log("✅ Login erfolgreich - Token gespeichert");
-
-        // Gesamte Response zurückgeben (enthält User-Daten)
         return response.data;
     } catch (error) {
         console.error("❌ Login fehlgeschlagen:", error);
 
-        // Fehlermeldung vom Backend extrahieren (falls vorhanden)
         const errorMessage =
             error.response?.data?.message || "Login fehlgeschlagen";
-
-        // Error mit besserer Message werfen
         throw new Error(errorMessage);
     }
-};
-
-/**
- * Logout Funktion
- * Löscht Token aus localStorage
- */
-export const logout = () => {
-    console.log("🚪 Logout - Token wird gelöscht");
-    localStorage.removeItem("authToken");
-};
-
-/**
- * Prüft ob User eingeloggt ist
- * @returns {boolean} true wenn Token existiert
- */
-export const isAuthenticated = () => {
-    const token = localStorage.getItem("authToken");
-    return !!token; // !! konvertiert zu boolean
-};
-
-/**
- * Gibt den aktuellen Token zurück
- * @returns {string|null} Token oder null
- */
-export const getToken = () => {
-    return localStorage.getItem("authToken");
 };
 
 /**
@@ -89,4 +58,45 @@ export const register = async (userData) => {
             error.response?.data?.message || "Registrierung fehlgeschlagen";
         throw new Error(errorMessage);
     }
+};
+
+// ===================================
+// AUTH FUNKTIONEN
+// ===================================
+
+/**
+ * Logout - Löscht Token und User-Daten
+ */
+export const logout = () => {
+    console.log("🚪 Logout - Daten werden gelöscht");
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("userData");
+};
+
+/**
+ * Prüft ob User eingeloggt ist
+ * @returns {boolean} true wenn Token existiert
+ */
+export const isAuthenticated = () => {
+    const token = localStorage.getItem("authToken");
+    return !!token;
+};
+
+/**
+ * Gibt den aktuellen Token zurück
+ * @returns {string|null} Token oder null
+ */
+export const getToken = () => {
+    return localStorage.getItem("authToken");
+};
+
+/**
+ * Hole User-Daten aus localStorage
+ */
+export const getUserData = () => {
+    const userDataString = localStorage.getItem("userData");
+    if (userDataString) {
+        return JSON.parse(userDataString);
+    }
+    return null;
 };

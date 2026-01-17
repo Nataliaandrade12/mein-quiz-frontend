@@ -1,13 +1,13 @@
-import { useState, useContext } from "react"; // ✅ CHANGED: useContext hinzugefügt
+import { useState } from "react"; // ✅ CHANGED: useContext entfernt
 import { useNavigate } from "react-router-dom";
 import LoginForm from "../components/login-form";
-import { AuthContext } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/AuthContext"; // ✅ CHANGED: useAuth verwenden
 
 const Login = () => {
     const navigate = useNavigate();
     const [error, setError] = useState("");
 
-    const { login } = useContext(AuthContext); // ✅ ADDED: login aus AuthContext holen
+    const { login } = useAuth(); // ✅ CHANGED: login aus AuthContext via useAuth
 
     const handleLogin = async (loginData) => {
         setError("");
@@ -15,19 +15,16 @@ const Login = () => {
         try {
             console.log("🔄 Login wird gestartet...");
 
-            const response = await login( // ✅ CHANGED: nutzt jetzt Context-login (statt irgendwas anderem)
+            const response = await login(
                 loginData.usernameOrEmail,
                 loginData.password
             );
 
             console.log("✅ Login erfolgreich:", response);
-
             navigate("/quiz");
         } catch (err) {
             console.error("❌ Login fehlgeschlagen:", err);
-            setError(
-                err.message || "Login fehlgeschlagen. Bitte prüfe deine Eingaben."
-            );
+            setError(err.message || "Login fehlgeschlagen. Bitte prüfe deine Eingaben.");
         }
     };
 

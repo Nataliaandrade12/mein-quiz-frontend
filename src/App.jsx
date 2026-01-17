@@ -1,29 +1,54 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
 
+import Layout from "./components/layout";
 import Home from "./pages/Home";
 import Game from "./pages/Game";
+import Login from "./pages/Login";
 import QuestionManager from "./pages/QuestionManager";
-import Impressum from "./pages/Impressum";
 import Rules from "./pages/Rules";
+import Impressum from "./pages/Impressum";
 import PageNotFound from "./pages/PageNotFound";
-import Layout from "./components/layout";
+
+import Forbidden from "./pages/Forbidden"; // ✅ NEU
+import ProtectedRoute from "./components/protected-route.jsx"; // ✅ NEU
 
 function App() {
-  return (
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="quiz" element={<Game />} />
-          <Route path="admin" element={<QuestionManager />} />
-          <Route path="regeln" element={<Rules />} />
-          <Route path="blabli" element={<Impressum />} />
-          <Route path="login" element={<Login />} />
-          <Route path="*" element={<PageNotFound />} />
-        </Route>
-      </Routes>
-  );
+    return (
+        <Routes>
+            <Route path="/" element={<Layout />}>
+                {/* Öffentliche Routes */}
+                <Route index element={<Home />} />
+                <Route path="login" element={<Login />} />
+                <Route path="regeln" element={<Rules />} />
+                <Route path="blabli" element={<Impressum />} />
+                <Route path="forbidden" element={<Forbidden />} />
+
+                {/* Geschützte Routes - nur für eingeloggte User */}
+                <Route
+                    path="quiz"
+                    element={
+                        <ProtectedRoute>
+                            <Game />
+                        </ProtectedRoute>
+                    }
+                />
+
+                {/* Admin Route - nur für ADMIN Rolle */}
+                <Route
+                    path="admin"
+                    element={
+                        <ProtectedRoute requiredRole="ADMIN">
+                            <QuestionManager />
+                        </ProtectedRoute>
+                    }
+                />
+
+                {/* 404 Page */}
+                <Route path="*" element={<PageNotFound />} />
+            </Route>
+        </Routes>
+    );
 }
 
 export default App;

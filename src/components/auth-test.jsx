@@ -1,6 +1,6 @@
 // src/components/auth-test.jsx
-import { useContext, useState } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
+//import { useContext, useState } from 'react';
+//import { AuthContext } from '../contexts/AuthContext';
 
 /**
  * Test Component für den AuthContext
@@ -53,7 +53,7 @@ function AuthTest() {
                 Diese Component testet den AuthContext. Wird später gelöscht!
             </p>
 
-            {/* Status Anzeige */}
+            {/* Status Anzeige }*/
             <div style={{
                 background: isAuthenticated ? '#d4edda' : '#f8d7da',
                 padding: '10px',

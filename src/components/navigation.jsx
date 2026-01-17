@@ -1,11 +1,10 @@
 // src/components/navigation.jsx
-import { useContext } from "react"; // ← NEU!
 import { Link } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthContext"; // ← NEU!
+import { useAuth } from "../contexts/AuthContext"; // ✅ CHANGED: useAuth statt useContext/AuthContext
 
 const Navigation = () => {
-    // AuthContext verwenden
-    const { user, isAuthenticated } = useContext(AuthContext);
+    // ✅ CHANGED: AuthContext über useAuth verwenden
+    const { user, isAuthenticated, logout } = useAuth();
 
     return (
         <nav className="layout-header-nav">
@@ -14,20 +13,34 @@ const Navigation = () => {
             <Link to="/admin">Fragen verwalten</Link>
             <Link to="/regeln">Regeln</Link>
             <Link to="/blabli">Impressum</Link>
-            <Link to="/login">Login</Link>
 
-            {/* User-Anzeige */}
+            {/* ✅ CHANGED: Login / Logout abhängig vom Auth-Status */}
+            {!isAuthenticated && <Link to="/login">Login</Link>}
+
             {isAuthenticated && (
-                <span style={{
-                    marginLeft: '20px',
-                    padding: '5px 10px',
-                    background: user.role === 'ADMIN' ? '#dc3545' : '#007bff',
-                    color: 'white',
-                    borderRadius: '4px',
-                    fontSize: '14px'
-                }}>
-          👤 {user.username} ({user.role})
-        </span>
+                <>
+                    <button
+                        onClick={logout}
+                        style={{ marginLeft: "10px" }}
+                    >
+                        Logout
+                    </button>
+
+                    {/* User-Anzeige */}
+                    <span
+                        style={{
+                            marginLeft: "20px",
+                            padding: "5px 10px",
+                            background:
+                                user.role === "ADMIN" ? "#dc3545" : "#007bff",
+                            color: "white",
+                            borderRadius: "4px",
+                            fontSize: "14px",
+                        }}
+                    >
+                        👤 {user.username} ({user.role})
+                    </span>
+                </>
             )}
         </nav>
     );
