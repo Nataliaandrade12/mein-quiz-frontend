@@ -1,7 +1,10 @@
 import { useState } from "react";
 import Button from "./button";
 
-const GameSession = ({ questions, onResetGame }) => {
+// ✅ NEU
+import { finishGame } from "../services/game-service";
+
+const GameSession = ({ questions, onResetGame, gameSessionId }) => {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [feedback, setFeedback] = useState(null);
   const [score, setScore] = useState(0);
@@ -41,6 +44,33 @@ const GameSession = ({ questions, onResetGame }) => {
     setIsAnswered(false);
   };
 
+  /**
+   * ✅ NEU
+   * Beendet das Game und speichert es im Backend
+   */
+  const handleGameEnd = async () => {
+    console.log("🏁 Game wird beendet...");
+
+    // 1. Score anzeigen (wie vorher)
+    setShowScore(true);
+    setFeedback(null);
+
+    // 2. Backend über Game-Ende informieren
+    if (gameSessionId) {
+      try {
+        console.log("💾 Speichere Resultat im Backend...");
+        const result = await finishGame(gameSessionId, score);
+
+        console.log("✅ Game gespeichert!", result);
+        console.log("🏆 Finaler Score:", result.totalScore);
+      } catch (error) {
+        console.error("❌ Fehler beim Speichern:", error);
+      }
+    } else {
+      console.warn("⚠️ Keine Game Session ID - Score wird nicht gespeichert!");
+    }
+  };
+
   // Define what happens when the game is reset
   // This function resets the games states to their initial values
   const resetGame = () => {
@@ -57,57 +87,45 @@ const GameSession = ({ questions, onResetGame }) => {
   };
 
   return (
-    <>
-      <h2>{currentQuestion.question}</h2>
-      <div className="answer-buttons-container">
-        {currentQuestion.answers.map((answer, index) => (
-          <Button
-            key={index}
-            text={answer}
-            disabled={isAnswered} // Disable buttons after an answer is selected
-            onAnswerClick={() => {
-              handleAnswerClick(answer);
-            }}
-          />
-        ))}
-      </div>
-      <div className="feedback">{feedback}</div>
-
-      {/**
-       * Show the next question button only if the question has been answered
-       * and the current question is not the last question
-       * If it's the last question, show the end game button
-       *
-       * The () after the feedback && is important otherwise the "Nächste Frage"
-       * or "Spiel beenden" button would always be rendered
-       * */}
-      {feedback &&
-        (questionIndex < questions.length - 1 ? (
-          <Button
-            text="Nächste Frage"
-            onAnswerClick={handleNextQuestion}
-            disabled={feedback === null} // Disable button until an answer is selected
-          />
-        ) : (
-          <Button
-            text="Spiel beenden"
-            onAnswerClick={() => {
-              setShowScore(true);
-              setFeedback(null);
-            }}
-          />
-        ))}
-
-      {/** Show the score only if the game is finished and the showScore state is true */}
-      {showScore && (
-        <div>
-          <h2>
-            Dein Ergebnis: {score} von {questions.length}
-          </h2>
-          <Button text="Neues Spiel" onAnswerClick={resetGame} />
+      <>
+        <h2>{currentQuestion.question}</h2>
+        <div className="answer-buttons-container">
+          {currentQuestion.answers.map((answer, index) => (
+              <Button
+                  key={index}
+                  text={answer}
+                  disabled={isAnswered} // Disable buttons after an answer is selected
+                  onAnswerClick={() => {
+                    handleAnswerClick(answer);
+                  }}
+              />
+          ))}
         </div>
-      )}
-    </>
+        <div className="feedback">{feedback}</div>
+
+        {feedback &&
+            (questionIndex < questions.length - 1 ? (
+                <Button
+                    text="Nächste Frage"
+                    onAnswerClick={handleNextQuestion}
+                    disabled={feedback === null} // Disable button until an answer is selected
+                />
+            ) : (
+                <Button
+                    text="Spiel beenden"
+                    onAnswerClick={handleGameEnd} // ✅ CHANGED
+                />
+            ))}
+
+        {showScore && (
+            <div>
+              <h2>
+                Dein Ergebnis: {score} von {questions.length}
+              </h2>
+              <Button text="Neues Spiel" onAnswerClick={resetGame} />
+            </div>
+        )}
+      </>
   );
 };
 
