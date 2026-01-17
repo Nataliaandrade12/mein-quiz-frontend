@@ -10,9 +10,9 @@ import QuestionManager from "./pages/QuestionManager";
 import Rules from "./pages/Rules";
 import Impressum from "./pages/Impressum";
 import PageNotFound from "./pages/PageNotFound";
-
 import Forbidden from "./pages/Forbidden"; // ✅ NEU
 import ProtectedRoute from "./components/protected-route.jsx"; // ✅ NEU
+import UserStatsPage from "./pages/UserStatsPage";
 
 function App() {
     return (
@@ -25,6 +25,7 @@ function App() {
                 <Route path="blabli" element={<Impressum />} />
                 <Route path="forbidden" element={<Forbidden />} />
                 <Route path="leaderboard" element={<LeaderboardPage />} />
+                <Route path="stats" element={<UserStatsPage />} />
 
                 {/* Geschützte Routes - nur für eingeloggte User */}
                 <Route

@@ -37,4 +37,24 @@ export const getTop10ByCategory = async (category) => {
         console.error("❌ Fehler beim Laden des Kategorie-Leaderboards:", error);
         throw error;
     }
+
+};
+/**
+ * Lädt die Statistiken eines Users
+ *
+ * @param {number} userId - Die User-ID
+ * @returns {Promise<Object>} User-Statistiken
+ */
+export const getUserStats = async (userId) => {
+    try {
+        console.log(`📊 Lade Statistiken für User ${userId}...`);
+
+        const response = await apiClient.get(`/leaderboard/user/${userId}/stats`);
+
+        console.log("✅ User Stats geladen:", response.data);
+        return response.data;
+    } catch (error) {
+        console.error("❌ Fehler beim Laden der User Stats:", error);
+        throw error;
+    }
 };

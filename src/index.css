@@ -747,3 +747,126 @@ button:focus-visible {
   color: #28a745;
   font-size: 18px;
 }
+
+/* ==========================================
+   USER STATS STYLES
+   ========================================== */
+
+.user-stats-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.stats-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.stats-username {
+  color: #666;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin: 30px 0;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.stat-card--games {
+  border-left: 5px solid #007bff;
+}
+
+.stat-card--score {
+  border-left: 5px solid #28a745;
+}
+
+.stat-card--average {
+  border-left: 5px solid #ffc107;
+}
+
+.stat-icon {
+  font-size: 48px;
+  flex-shrink: 0;
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-label {
+  color: #666;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: 0 0 8px 0;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-size: 36px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.no-games {
+  text-align: center;
+  padding: 40px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  margin: 30px 0;
+}
+
+.no-games h3 {
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.stats-actions {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.button--secondary {
+  background: #6c757d;
+}
+
+.button--secondary:hover {
+  background: #5a6268;
+}
+
+.no-auth {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.no-auth h2 {
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.no-auth p {
+  color: #999;
+  margin-bottom: 25px;
+  font-size: 16px;
+}

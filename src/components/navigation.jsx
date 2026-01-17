@@ -27,8 +27,10 @@ const Navigation = () => {
                 <>
                     <Link to="/quiz">Quiz</Link>
 
-                    {/* ✅ NEU: Leaderboard Link */}
                     <Link to="/leaderboard">Leaderboard</Link>
+
+                    {/* ✅ NEU: Stats Link */}
+                    <Link to="/stats">Meine Stats</Link>
 
                     {/* Admin Link - nur für ADMIN Rolle */}
                     {user?.role === "ADMIN" && (
