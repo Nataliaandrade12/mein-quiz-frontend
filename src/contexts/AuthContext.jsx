@@ -1,4 +1,6 @@
 import { createContext, useState } from 'react';
+import { login as apiLogin, logout as apiLogout } from "../services/auth-service";
+
 
 // Context erstellen
 export const AuthContext = createContext();

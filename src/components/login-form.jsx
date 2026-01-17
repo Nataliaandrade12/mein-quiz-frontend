@@ -76,8 +76,9 @@ const LoginForm = ({ onLogin }) => {
     // ==========================================
     // HANDLER: Submit
     // ==========================================
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = async (e) => {
+        // kommt entweder von <form onSubmit> oder von Button onClick
+        if (e?.preventDefault) e.preventDefault();
 
         // Alle Felder validieren
         const usernameOrEmailOk = validateUsernameOrEmail(usernameOrEmail);
@@ -96,12 +97,17 @@ const LoginForm = ({ onLogin }) => {
             password: password,
         };
 
-        // Parent-Funktion aufrufen (kommt später von AuthContext)
-        if (onLogin) {
-            onLogin(loginData);
+        // Parent-Funktion aufrufen (jetzt mit await + sauberem Loading)
+        try {
+            if (onLogin) {
+                await onLogin(loginData);
+            }
+        } catch (error) {
+            // Error wird im Parent behandelt
+            console.error("LoginForm Error:", error);
+        } finally {
+            setIsLoading(false);
         }
-
-        setIsLoading(false);
     };
 
     // ==========================================
