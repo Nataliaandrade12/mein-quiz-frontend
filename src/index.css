@@ -50,22 +50,34 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-/* Eigene Stile für die Navigation im Layout-Header */
+/* ===================================
+   NAVIGATION STYLES
+   =================================== */
 .layout-header-nav {
-  margin-bottom: 15px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding: 15px 0;
+  flex-wrap: wrap;
 }
 
 .layout-header-nav a {
-  /* Stil für die Link-Komponenten */
-  color: #6661fb; /* React-Blau, oder behalte 'white' wenn es besser passt */
-  margin-right: 15px;
+  color: #007bff;
   text-decoration: none;
-  font-size: 1rem; /* Etwas kleiner als die h1 im Header */
+  font-weight: 500;
+  transition: color 0.2s;
 }
 
 .layout-header-nav a:hover {
-  color: #2f2d75; /* Beispiel Hover-Farbe */
+  color: #0056b3;
   text-decoration: underline;
+}
+
+/* Logout Button Hover Effect */
+.layout-header-nav button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  transition: all 0.2s;
 }
 
 /* Stil für den Hauptinhaltsbereich */
