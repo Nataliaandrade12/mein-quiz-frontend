@@ -119,7 +119,7 @@ button:focus-visible {
 }
 
 .question-manager h1 {
-  text-align: lef;
+  text-align: left;
   margin-bottom: 2rem;
   color: #333;
 }
@@ -592,4 +592,62 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+/* ==========================================
+   AUTH PAGES & FORMS
+   ========================================== */
+
+.auth-page {
+  min-height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.auth-container {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+}
+
+.auth-form h2 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #282c34;
+}
+
+.auth-links {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.auth-links p {
+  margin: 0.5rem 0;
+  color: #666;
+}
+
+.auth-links a {
+  color: #61dafb;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.auth-links a:hover {
+  text-decoration: underline;
+}
+
+/* Form Input Success State */
+.form-input--success {
+  border-color: #28a745;
+}
+
+/* Required Star */
+.required {
+  color: #dc3545;
 }

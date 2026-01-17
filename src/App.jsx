@@ -1,5 +1,6 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
 
 import Home from "./pages/Home";
 import Game from "./pages/Game";
@@ -18,6 +19,7 @@ function App() {
         <Route path="/admin" element={<QuestionManager />} />
         <Route path="/regeln" element={<Rules />} />
         <Route path="/blabli" element={<Impressum />} />
+        <Route path="login" element={<Login />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>
