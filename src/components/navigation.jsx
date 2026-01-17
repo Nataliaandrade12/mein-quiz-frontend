@@ -5,7 +5,7 @@ import { useAuth } from "../contexts/AuthContext"; // ✅ useAuth verwenden
 const Navigation = () => {
     const { isAuthenticated, user, logout } = useAuth();
 
-    // ✅ Logout Handler (wie im Auftrag)
+    // ✅ Logout Handler
     const handleLogout = () => {
         console.log("🚪 Logout-Button geklickt");
         logout();
@@ -14,27 +14,32 @@ const Navigation = () => {
     return (
         <nav className="layout-header-nav" style={{ display: "flex", alignItems: "center" }}>
             {/* ===================================
-          ÖFFENTLICHE LINKS (immer sichtbar)
-          =================================== */}
+               ÖFFENTLICHE LINKS (immer sichtbar)
+               =================================== */}
             <Link to="/">Home</Link>
             <Link to="/regeln">Regeln</Link>
             <Link to="/blabli">Impressum</Link>
 
             {/* ===================================
-          GESCHÜTZTE LINKS (nur wenn eingeloggt)
-          =================================== */}
+               GESCHÜTZTE LINKS (nur wenn eingeloggt)
+               =================================== */}
             {isAuthenticated && (
                 <>
                     <Link to="/quiz">Quiz</Link>
 
+                    {/* ✅ NEU: Leaderboard Link */}
+                    <Link to="/leaderboard">Leaderboard</Link>
+
                     {/* Admin Link - nur für ADMIN Rolle */}
-                    {user?.role === "ADMIN" && <Link to="/admin">Fragen verwalten</Link>}
+                    {user?.role === "ADMIN" && (
+                        <Link to="/admin">Fragen verwalten</Link>
+                    )}
                 </>
             )}
 
             {/* ===================================
-          AUTH BUTTONS (rechts)
-          =================================== */}
+               AUTH BUTTONS (rechts)
+               =================================== */}
             <div
                 style={{
                     marginLeft: "auto",
@@ -45,17 +50,17 @@ const Navigation = () => {
             >
                 {isAuthenticated ? (
                     <>
-            <span
-                style={{
-                    color: "#28a745",
-                    fontWeight: "bold",
-                    padding: "5px 10px",
-                    backgroundColor: "rgba(40, 167, 69, 0.1)",
-                    borderRadius: "4px",
-                }}
-            >
-              👤 {user?.username || "User"}
-            </span>
+                        <span
+                            style={{
+                                color: "#28a745",
+                                fontWeight: "bold",
+                                padding: "5px 10px",
+                                backgroundColor: "rgba(40, 167, 69, 0.1)",
+                                borderRadius: "4px",
+                            }}
+                        >
+                            👤 {user?.username || "User"}
+                        </span>
 
                         <button
                             onClick={handleLogout}

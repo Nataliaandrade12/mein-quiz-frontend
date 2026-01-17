@@ -1,5 +1,6 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
+import LeaderboardPage from "./pages/Leaderboard";
 
 import Layout from "./components/layout";
 import Home from "./pages/Home";
@@ -23,6 +24,7 @@ function App() {
                 <Route path="regeln" element={<Rules />} />
                 <Route path="blabli" element={<Impressum />} />
                 <Route path="forbidden" element={<Forbidden />} />
+                <Route path="leaderboard" element={<LeaderboardPage />} />
 
                 {/* Geschützte Routes - nur für eingeloggte User */}
                 <Route
